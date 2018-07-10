@@ -12,19 +12,25 @@
     "browser-sync-webpack-plugin": "^2.2.2",
     "clean-webpack-plugin": "^0.1.19",
     "express": "^4.16.3",
+    "pg": "^7.4.3",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "webpack": "^4.15.1",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "ws": "^5.2.1"
   },
   "scripts": {
     "build": "webpack",
     "start": "node src/server",
     "watch": "webpack --watch",
-    "dev": "FORCE_COLOR=1 nf start dev-client,dev-server,dev-serve",
+    "dev": "FORCE_COLOR=1 nf start dev-transpile,dev-test-client,dev-test-server,dev-serve",
     "dev-serve": "NODE_ENV=development nodemon app/build/server/server.js",
-    "dev-server": "NODE_ENV=development mocha-webpack \"app/test/server\" ==recursive --webpack-config webpack.server.js --watch",
-    "dev-client": "NODE_ENV=development mocha-webpack \"app/test/client\" ==recursive --webpack-config webpack.client.js --watch"
+    "dev-test-server": "NODE_ENV=development mocha-webpack \"app/test/server\" ==recursive --webpack-config webpack.server.js --watch",
+    "dev-test-client": "NODE_ENV=development mocha-webpack \"app/test/client\" ==recursive --webpack-config webpack.client.js --watch",
+    "dev-transpile": "NODE_ENV=development webpack --watch"
   },
   "devDependencies": {
     "chai": "^4.1.2",
