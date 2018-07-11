@@ -1,9 +1,15 @@
-import fs from 'fs';
-import path from 'path';
-import Sequelize from 'sequelize';
-import configs from '#db/config';
+// TODO: Go back to require()
+// Gotta use const because Sequlize does some kinda module loading
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const configs = require('../../db/config/config');
 
-const basename = path.basename(__filename);
+// TODO: Go back to require()
+// Because I'm transpiling, __dirname points to build/server
+// A POOR DECISION INDEED
+const basename = path.resolve(__dirname, '..', '..', 'db', 'models');
+console.log('BASENAME:', basename);
 const env = process.env.NODE_ENV || 'development';
 const config = configs[env];
 const db = {};
@@ -20,14 +26,17 @@ if (config.use_env_variable) {
   );
 }
 
-fs.readdirSync(__dirname)
+fs.readdirSync(basename)
   .filter(file => {
     return (
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      file.slice(-3) === '.js' &&
+      file !== 'index.js'
     );
   })
   .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
+    const model = sequelize['import'](path.join(basename, file));
     db[model.name] = model;
   });
 

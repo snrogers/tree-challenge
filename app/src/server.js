@@ -1,14 +1,18 @@
 // Monkey-patch `require` to handle inline sourcemaps
-if (process.env.NODE_ENV === 'development')
+// import 'source-map-support/register';
+if (process.env.NODE_ENV === 'development') {
   require('source-map-support').install({
     hookRequire: true
   });
+}
 
 import express from 'express';
 import path from 'path';
 import WebSocket from 'ws';
 
 import { registerSocketClient } from '#server/socket-server';
+
+const Factory = require('#db/models').Factory; // Would be better to make a model module loader, but time
 
 /*************************/
 /** Set up some Globals **/

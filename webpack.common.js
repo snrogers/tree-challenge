@@ -5,7 +5,7 @@ const path = require('path');
 
 const pathAliases = {
   '#client': path.resolve(__dirname, 'app', 'src', 'client'),
-  '#db': path.resolve(__dirname, 'app', 'src', 'db'),
+  '#db': path.resolve(__dirname, 'app', 'db'),
   '#server': path.resolve(__dirname, 'app', 'src', 'server'),
   '#shared': path.resolve(__dirname, 'app', 'src', 'shared')
 };
@@ -28,7 +28,10 @@ const commonConfig = {
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: ['@babel/plugin-transform-runtime'],
+            plugins: [
+              '@babel/plugin-transform-runtime'
+              // '@babel/plugin-proposal-class-properties'
+            ],
             presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }

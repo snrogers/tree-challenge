@@ -17,7 +17,14 @@ export function getTreeState({ treeState }) {
   };
 }
 
-export function addFactory({ id, name, numChildren, range, treeState }) {
+export function addFactory({
+  id,
+  name,
+  numChildren,
+  rangeMax,
+  rangeMin,
+  treeState
+}) {
   if (numChildren < 0 || numChildren > 15)
     throw new Error('numChildren out of bounds');
   return {
@@ -25,7 +32,8 @@ export function addFactory({ id, name, numChildren, range, treeState }) {
     id,
     name,
     numChildren,
-    range,
+    rangeMax,
+    rangeMin,
     treeState
   };
 }

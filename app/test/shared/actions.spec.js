@@ -2,31 +2,16 @@ import { assert } from 'chai';
 
 import {
   ADD_FACTORY,
-  REMOVE_FACTORY,
   GET_TREE_STATE,
+  REMOVE_FACTORY,
+  THROW_ERROR,
   UPDATE_FACTORY,
   addFactory,
-  removeFactory,
   getTreeState,
+  removeFactory,
+  throwError,
   updateFactory
 } from '#shared/actions';
-
-describe('getTreeState', () => {
-  it('contains the received treeState', () => {
-    const treeState = [];
-
-    const action = getTreeState({ treeState });
-
-    assert(
-      action.type === GET_TREE_STATE,
-      `Expected action.type to be: ${GET_TREE_STATE.toString()}, got: ${action.type.toString()}`
-    );
-    assert(
-      action.treeState === treeState,
-      `Expected action.treeState to be: ${treeState}, got: ${action.treeState}`
-    );
-  });
-});
 
 describe('addFactory', () => {
   it('specifies the name, number of children, and range of the children', () => {
@@ -53,6 +38,23 @@ describe('addFactory', () => {
     assert(
       action.range[0] === range[0] && action.range[1] === range[1],
       `Expected action.range to be: ${range}, got: ${action.range}`
+    );
+  });
+});
+
+describe('getTreeState', () => {
+  it('contains the received treeState', () => {
+    const treeState = [];
+
+    const action = getTreeState({ treeState });
+
+    assert(
+      action.type === GET_TREE_STATE,
+      `Expected action.type to be: ${GET_TREE_STATE.toString()}, got: ${action.type.toString()}`
+    );
+    assert(
+      action.treeState === treeState,
+      `Expected action.treeState to be: ${treeState}, got: ${action.treeState}`
     );
   });
 
@@ -116,6 +118,12 @@ describe('removeFactory', () => {
       action.id === id,
       `Expected action.id to be: ${id}, got: ${action.id}`
     );
+  });
+});
+
+describe('throwError', () => {
+  it('fires a toast', () => {
+    throw new Error('UNIMPLEMENTED');
   });
 });
 

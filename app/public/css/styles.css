@@ -1,3 +1,42 @@
+html {
+  min-height: 100%;
+}
+
 body {
+  background-color: #888;
+  min-height:100%;
+}
+
+.app {
+  min-height:100%;
+}
+
+.container {
   padding-top:60px;
+  background-color: #eee;
+  min-height: 100%;
+}
+
+tree > ul {
+  padding-left: 20px;
+}
+
+li.factory {
+  list-style: none;
+  padding-left: 10px;
+  border-left: 1px solid black;
+}
+
+li.factory > ul {
+  padding-left: 20px;
+}
+
+li.leaf {
+  list-style: none;
+  padding-left: 10px;
+  border-left: 1px solid gray;
+}
+
+.new-factory-form {
+  background-color: #99CC99;
 }

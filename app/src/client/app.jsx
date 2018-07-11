@@ -9,12 +9,8 @@ const AppComponent = ({ treeState, actions }) => (
   <div className="container">
     <div className="row">
       <div className="col">
-        <div className="card">
-          <div className="card-body">
-            <h1 className="card-title">Tree Challenge</h1>
-            <Tree actions={actions} treeState={treeState} />
-          </div>
-        </div>
+        <h1 className="card-title">Tree Challenge</h1>
+        <Tree actions={actions} treeState={treeState} />
       </div>
     </div>
   </div>
