@@ -1,8 +1,20 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { render } from 'react-dom';
 
-import { App } from './client/app';
+import { App } from '#client/app';
+import { openSocketConnection } from '#client/socket';
+import { rootReducer } from '#client/reducers';
 
-const appNode = document.querySelector('#app');
+const store = createStore(rootReducer);
 
-ReactDom.render(<App />, appNode);
+openSocketConnection({ port: 4040 });
+
+// Render
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.querySelector('#app')
+);

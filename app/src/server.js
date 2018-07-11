@@ -8,11 +8,11 @@ import express from 'express';
 import path from 'path';
 import WebSocket from 'ws';
 
-import App from './client/app';
-import Html from './client/html';
+import { registerSocketClient } from '#server/socket-server';
 
-console.log('RESOLVED:', path.resolve(__dirname));
-console.log('__dirname', __dirname);
+/*************************/
+/** Set up some Globals **/
+/*************************/
 // Application Root Dir
 global.__rootdir = path.resolve(__dirname);
 // Public files Dir
@@ -20,7 +20,9 @@ global.__publicdir = path.join(__rootdir, '..', '..', 'public');
 // Client files Dir
 global.__clientdir = path.join(__rootdir, '..', 'client');
 
-// Express Server
+/********************/
+/** Express Server **/
+/********************/
 const httpPort = 4000;
 const server = express();
 server.use('/public', express.static(__publicdir));
@@ -31,15 +33,15 @@ server.get('/', (req, res) => {
 });
 
 server.listen(httpPort);
-console.log(`Serving at http://localhost:${httpPort}`);
+console.log(`Serving http at http://localhost:${httpPort}`);
 
-// WS Server
-const wss = new WebSocket.Server({ port: 8080 });
+/***************/
+/** WS Server **/
+/***************/
+const wsPort = 4040;
+const wss = new WebSocket.Server({ port: 4040 });
+console.log(`Serving ws at http://localhost:${wsPort}`);
 
-wss.on('connection', ws => {
-  ws.on('message', message => {
-    console.log(message);
-  });
-
-  ws.send('TODO: Initialize from DB');
+wss.on('connection', client => {
+  registerSocketClient(client);
 });

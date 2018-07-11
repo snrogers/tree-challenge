@@ -3,13 +3,22 @@ import PropTypes from 'prop-types';
 
 import { Factory } from './factory';
 
-export const Tree = ({ treeState }) => {
+export const Tree = ({ treeState, actions }) => {
   return (
-    <ul>
-      {treeState.map((factoryState, index) => (
-        <Factory key={index} factoryState={factoryState} />
-      ))}
-    </ul>
+    <div>
+      <button
+        className="btn btn-primary"
+        onClick={() => actions.addFactory({})}
+      >
+        +
+      </button>
+      {/* TODO: Move this lambda outside the return statement */}
+      <ul>
+        {treeState.map((factoryState, index) => (
+          <Factory key={index} factoryState={factoryState} />
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -7,17 +7,20 @@
     "@babel/core": "^7.0.0-beta.52",
     "@babel/preset-env": "^7.0.0-beta.52",
     "@babel/preset-react": "^7.0.0-beta.52",
+    "@babel/runtime": "^7.0.0-beta.52",
     "babel-loader": "8.0.0-beta.4",
     "browser-sync": "^2.24.5",
     "browser-sync-webpack-plugin": "^2.2.2",
     "clean-webpack-plugin": "^0.1.19",
     "express": "^4.16.3",
     "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
+    "sequelize": "^4.38.0",
     "webpack": "^4.15.1",
     "webpack-node-externals": "^1.7.2",
     "ws": "^5.2.1"
@@ -33,6 +36,7 @@
     "dev-transpile": "NODE_ENV=development webpack --watch"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.52",
     "chai": "^4.1.2",
     "foreman": "^3.0.1",
     "mocha": "^5.2.0",
