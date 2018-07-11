@@ -8,14 +8,21 @@ let responseHandler = (function() {
   return message => {};
 })();
 
+// Sends Actions to server via WebSocket if actionObj._remote === true
 export function bindSocketActionCreators(actions, dispatch) {
-  if (!_dispatch) _dispatch = dispatch; // Kinda ugly, but it keeps things within React/Redux conventions
+  if (!_dispatch) _dispatch = dispatch;
 
-  return Object.entries(actions).reduce((sum, [key, action]) => {
+  return Object.entries(actions).reduce((sum, [key, actionFn]) => {
     sum[key] = (...args) => {
-      const actionJSON = JSON.stringify(action.apply(null, args));
-      console.log('actionObj', actionJSON);
-      _socket.send(actionJSON);
+      const actionObj = actionFn.apply(null, args);
+      if (actionObj._remote) {
+        console.log('REMOTE', actionObj);
+        const actionJSON = JSON.stringify(actionObj);
+        _socket.send(actionJSON);
+      } else {
+        console.log('LOCAL', actionObj);
+        _dispatch(actionObj);
+      }
     };
     return sum;
   }, {});
@@ -34,10 +41,8 @@ export function openSocketConnection({ port }) {
 
   // FIRE IT UP
   _socket = window.socket = new WebSocket(host);
-  _socket.onopen = () => {
-    console.log('*** Socket open');
-    // TODO: Request treeState
-  };
+  _socket.onopen = () => {};
+
   _socket.onmessage = message => {
     console.log('=== MESSAGE ===');
     console.log(message);
@@ -45,6 +50,6 @@ export function openSocketConnection({ port }) {
   };
 
   _socket.onclose = function() {
-    console.log('*** Socket closed');
+    openSocketConnection({ port });
   };
 }

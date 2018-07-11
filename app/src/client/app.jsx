@@ -1,25 +1,41 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { Actions } from '#shared/actions';
+import { ModalContainer } from './modal-container';
 import { Tree } from './tree';
 import { bindSocketActionCreators } from './socket';
 
-const AppComponent = ({ treeState, actions }) => (
-  <div className="container">
-    <div className="row">
-      <div className="col">
-        <h1 className="card-title">Tree Challenge</h1>
-        <Tree actions={actions} treeState={treeState} />
-      </div>
-    </div>
-  </div>
-);
+class AppComponent extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
-function mapStateToProps(state) {
-  return {
-    treeState: state
-  };
+  render() {
+    return (
+      <>
+        <div className="container app-container">
+          <div className="row justify-content-center">
+            <div className="col">
+              <h1 className="card-title">Tree Challenge</h1>
+              <Tree
+                actions={this.props.actions}
+                treeState={this.props.treeState}
+              />
+            </div>
+          </div>
+        </div>
+        <ModalContainer
+          actions={this.props.actions}
+          modalState={this.props.modalState}
+        />
+      </>
+    );
+  }
+}
+
+function mapStateToProps({ treeState, modalState }) {
+  return { modalState, treeState };
 }
 
 function mapDispatchToProps(dispatch) {

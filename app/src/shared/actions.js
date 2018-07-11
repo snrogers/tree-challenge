@@ -1,67 +1,91 @@
+// NOTE: Gotta use strings instead of Symbols since
+// most of these are gonna get sent to the server
+export const ACTIVATE_NEW_FACTORY_MODAL = 'ACTIVATE_NEW_FACTORY_MODAL';
+export const ACTIVATE_EDIT_FACTORY_MODAL = 'ACTIVATE_EDIT_FACTORY_MODAL';
 export const ADD_FACTORY = 'ADD_FACTORY';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const GET_TREE_STATE = 'GET_TREE_STATE';
+export const REGENERATE_FACTORY = 'REGENERATE_FACTORY';
 export const REMOVE_FACTORY = 'REMOVE_FACTORY';
-export const UPDATE_FACTORY = 'UPDATE_FACTORY';
+export const RENAME_FACTORY = 'RENAME_FACTORY';
 
-/*
- NOTE: All actions include a 'treeState' arg, as these actions are
- all used as both requests and responses, and will be
- returned from the server with an updated treeState before being
- dispatched to the Redux Store
-*/
-
-export function getTreeState({ treeState }) {
+// NOTE: { _remote: true } means these will be
+// sent to the server rather than to the store
+export function addFactory(factory) {
+  if (factory.numChildren < 0 || factory.numChildren > 15)
+    throw new Error('numChildren out of bounds');
+  if (factory.rangeMin > factory.rangeMax)
+    throw new Error('rangeMin > rangeMax');
   return {
+    _remote: true,
+    type: ADD_FACTORY,
+    factory
+  };
+}
+
+export function getTreeState(treeState) {
+  return {
+    _remote: true,
     type: GET_TREE_STATE,
     treeState
   };
 }
 
-export function addFactory({
-  id,
-  name,
-  numChildren,
-  rangeMax,
-  rangeMin,
-  treeState
-}) {
-  if (numChildren < 0 || numChildren > 15)
+export function regenerateFactory(factory) {
+  if (factory.numChildren < 0 || factory.numChildren > 15)
     throw new Error('numChildren out of bounds');
+  if (factory.rangeMin > factory.rangeMax)
+    throw new Error('rangeMin > rangeMax');
   return {
-    type: ADD_FACTORY,
-    id,
-    name,
-    numChildren,
-    rangeMax,
-    rangeMin,
-    treeState
+    _remote: true,
+    type: REGENERATE_FACTORY,
+    factory: { ...factory, name: undefined }
   };
 }
 
-export function removeFactory({ id, treeState }) {
+export function removeFactory(factory) {
   return {
+    _remote: true,
     type: REMOVE_FACTORY,
-    id,
-    treeState
+    factory
   };
 }
 
-export function updateFactory({ id, name, numChildren, range, treeState }) {
-  if (numChildren < 0 || numChildren > 15)
-    throw new Error('numChildren out of bounds');
+export function renameFactory(factory) {
   return {
-    type: UPDATE_FACTORY,
-    id,
-    name,
-    numChildren,
-    range,
-    treeState
+    _remote: true,
+    type: RENAME_FACTORY,
+    factory
   };
+}
+
+// NOTE: These lack { _remote: true} and will therefore *not*
+// be sent to the server
+export function activateEditFactoryModal(factory) {
+  return {
+    type: ACTIVATE_EDIT_FACTORY_MODAL,
+    factory
+  };
+}
+
+export function activateNewFactoryModal(factory) {
+  return {
+    type: ACTIVATE_NEW_FACTORY_MODAL,
+    factory
+  };
+}
+
+export function closeModal() {
+  return { type: CLOSE_MODAL };
 }
 
 export const Actions = {
   addFactory,
+  activateEditFactoryModal,
+  activateNewFactoryModal,
   getTreeState,
+  regenerateFactory,
   removeFactory,
-  updateFactory
+  renameFactory,
+  closeModal
 };

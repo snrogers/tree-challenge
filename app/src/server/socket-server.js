@@ -1,3 +1,4 @@
+import WebSocket from 'ws';
 import { getTreeState, processAction } from '#server/db-actions';
 import { Actions } from '#shared/actions';
 
@@ -5,7 +6,13 @@ let clients = [];
 
 function sendAll(message) {
   console.log(message);
-  clients.forEach(client => client.send(message));
+  // Send only to OPEN sockets
+  clients
+    .filter(client => client.readyState === WebSocket.OPEN)
+    .forEach(client => client.send(message));
+
+  // Prune CLOSED sockets
+  clients = clients.filter(client => client.readyState !== WebSocket.CLOSED);
 }
 
 export async function registerSocketClient(client) {
@@ -19,22 +26,15 @@ export async function registerSocketClient(client) {
         console.log(message);
         await processAction(message);
         const treeState = await getTreeState();
-        const response = Actions.getTreeState({ treeState });
-        console.log('**** Response');
-        console.log(response);
+        const response = Actions.getTreeState(treeState);
         sendAll(JSON.stringify(response));
       } catch (e) {
-        // console.error(e);
-        sendAll(
-          JSON.stringify(
-            Actions.throwError({ message: 'SOMETHING WENT HORRIBLY WRONG' })
-          )
-        );
+        console.error(e);
       }
     });
 
     const treeState = await getTreeState();
-    client.send(JSON.stringify(Actions.getTreeState({ treeState })));
+    client.send(JSON.stringify(Actions.getTreeState(treeState)));
   } catch (e) {
     console.error(e);
   }
