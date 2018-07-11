@@ -5,6 +5,7 @@ const path = require('path');
 
 const pathAliases = {
   '#client': path.resolve(__dirname, 'app', 'src', 'client'),
+  '#db': path.resolve(__dirname, 'app', 'src', 'db'),
   '#server': path.resolve(__dirname, 'app', 'src', 'server'),
   '#shared': path.resolve(__dirname, 'app', 'src', 'shared')
 };
