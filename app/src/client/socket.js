@@ -28,28 +28,29 @@ export function bindSocketActionCreators(actions, dispatch) {
   }, {});
 }
 
-export function openSocketConnection({ port }) {
-  if (_socket && _socket.state) null; // TODO: Prevent attempting to re-open an open socket
-
-  // Compute host
+export function openSocketConnection() {
+  // Compute host address
   let host = location.origin;
   host = host.slice(host.indexOf('://') + 3, host.length);
   if (host.indexOf(':') !== -1) {
-    host = host.slice(0, host.indexOf(':'));
+    // connect @ port 400 in development
+    host = host.slice(0, host.indexOf(':') + 1) + '4000';
   }
-  host = 'ws://' + host + ':' + port;
+  host = 'ws://' + host;
 
   // FIRE IT UP
   _socket = window.socket = new WebSocket(host);
   _socket.onopen = () => {};
 
+  // Handle Messages
   _socket.onmessage = message => {
     console.log('=== MESSAGE ===');
     console.log(message);
     _dispatch(JSON.parse(message.data));
   };
 
+  // Reconnect if you lose connection
   _socket.onclose = function() {
-    openSocketConnection({ port });
+    openSocketConnection();
   };
 }

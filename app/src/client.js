@@ -9,7 +9,7 @@ import { rootReducer } from '#client/reducers';
 
 const store = createStore(rootReducer);
 
-openSocketConnection({ port: 4040 });
+openSocketConnection();
 
 // Render
 render(

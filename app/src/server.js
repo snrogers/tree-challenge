@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 import express from 'express';
+import http from 'http';
 import path from 'path';
 import WebSocket from 'ws';
 
@@ -27,24 +28,22 @@ global.__clientdir = path.join(__rootdir, '..', 'client');
 /********************/
 /** Express Server **/
 /********************/
-const httpPort = 4000;
-const server = express();
-server.use('/public', express.static(__publicdir));
-server.use('/public', express.static(__clientdir));
 
-server.get('/', (req, res) => {
+const port = process.env.PORT || 4000;
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+app.use('/public', express.static(__publicdir));
+app.use('/public', express.static(__clientdir));
+app.get('/', (req, res) => {
+  console.log(req);
   res.sendFile(path.join(__publicdir, 'index.html'));
 });
 
-server.listen(httpPort);
-console.log(`Serving http at http://localhost:${httpPort}`);
-
-/***************/
-/** WS Server **/
-/***************/
-const wsPort = 4040;
-const wss = new WebSocket.Server({ port: 4040 });
-console.log(`Serving ws at http://localhost:${wsPort}`);
+server.listen(port);
+console.log(`Serving http at http://localhost:${port}`);
+console.log(`Serving ws at http://localhost:${port}`);
 
 wss.on('connection', client => {
   registerSocketClient(client);
