@@ -16,11 +16,9 @@ export function bindSocketActionCreators(actions, dispatch) {
     sum[key] = (...args) => {
       const actionObj = actionFn.apply(null, args);
       if (actionObj._remote) {
-        console.log('REMOTE', actionObj);
         const actionJSON = JSON.stringify(actionObj);
         _socket.send(actionJSON);
       } else {
-        console.log('LOCAL', actionObj);
         _dispatch(actionObj);
       }
     };
