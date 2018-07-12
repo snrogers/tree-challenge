@@ -1,5 +1,4 @@
 // const CleanWebpackPlugin = require("clean-webpack-plugin");
-const webpack = require('webpack');
 const path = require('path');
 // const TransformRuntime = require('@babel/plugin-transform-runtime');
 
@@ -12,13 +11,6 @@ const pathAliases = {
 
 const commonConfig = {
   devtool: 'inline-source-map',
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: `'${process.env.NODE_ENV}'`
-      }
-    })
-  ],
   mode: process.env.NODE_ENV,
   module: {
     rules: [

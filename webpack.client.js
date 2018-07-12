@@ -1,5 +1,6 @@
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 const commonConfig = require('./webpack.common');
 
@@ -12,7 +13,11 @@ const clientConfig = {
     filename: 'client.js'
   },
   plugins: [
-    ...commonConfig.plugins,
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: `'${process.env.NODE_ENV}'`
+      }
+    }),
     new BrowserSyncPlugin(
       {
         port: 3000,

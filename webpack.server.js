@@ -8,6 +8,7 @@ const serverConfig = {
   entry: './app/src/server.js',
   externals: nodeExternals(),
   node: { __dirname: false },
+  optimization: { minimize: false },
   output: {
     path: path.resolve(__dirname, 'app', 'build', 'server'),
     filename: 'server.js'
