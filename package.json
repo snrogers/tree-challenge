@@ -31,7 +31,6 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "node src/server",
     "watch": "webpack --watch",
     "dev": "FORCE_COLOR=1 nf start dev-transpile,dev-test-client,dev-test-server,dev-serve",
     "dev-serve": "NODE_ENV=development nodemon app/build/server/server.js",
