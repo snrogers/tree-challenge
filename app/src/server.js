@@ -1,4 +1,4 @@
-// Monkey-patch `require` to handle inline sourcemaps
+// Handle sourcemaps
 require('source-map-support').install();
 
 import express from 'express';
