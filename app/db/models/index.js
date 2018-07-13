@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const configs = require('../../db/config/config');
+const configs = require('../config/config');
 
 // Because I'm transpiling, __dirname points to build/server
 const basename = path.resolve(__dirname, '..', '..', 'db', 'models');
