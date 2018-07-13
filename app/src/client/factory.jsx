@@ -31,3 +31,8 @@ export class Factory extends PureComponent {
     );
   }
 }
+
+Factory.propTypes = {
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
+  factoryState: PropTypes.object.isRequired
+};

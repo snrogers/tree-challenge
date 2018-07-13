@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-export class IntegerControl extends React.Component {
+export class IntegerControl extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -34,3 +34,11 @@ export class IntegerControl extends React.Component {
     );
   }
 }
+
+IntegerControl.propTypes = {
+  min: PropTypes.number,
+  max: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.node,
+  validator: PropTypes.func
+};

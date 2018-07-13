@@ -17,7 +17,6 @@ export class TextControl extends PureComponent {
   }
 
   render() {
-    console.log(this.props.value);
     return (
       <div className={'form-group col has-error'}>
         <label className="control-label">{this.props.label}</label>
@@ -32,3 +31,9 @@ export class TextControl extends PureComponent {
     );
   }
 }
+
+TextControl.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.node,
+  validator: PropTypes.func
+};

@@ -42,3 +42,8 @@ export class ModalContainer extends PureComponent {
     );
   }
 }
+
+ModalContainer.propTypes = {
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
+  modalState: PropTypes.object.isRequired
+};

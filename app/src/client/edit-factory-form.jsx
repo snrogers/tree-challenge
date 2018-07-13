@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import * as FactoryValidators from './factory-validators';
 import { Factory } from './factory';
 import { IntegerControl } from './integer-control';
 import { TextControl } from './text-control';
@@ -58,45 +59,13 @@ export class EditFactoryForm extends PureComponent {
     /*****************/
     /** Validations **/
     /*****************/
-    this.nameValidator = () =>
-      this.state.name ? null : 'Factory name required';
-    this.rangeMinValidator = () => {
-      if (this.state.rangeMin !== 0 && !this.state.rangeMin) {
-        // Required
-        return 'Minimum value required';
-      } else if (
-        // <= rangeMax
-        (this.state.rangeMax === 0 || this.state.rangeMax) &&
-        this.state.rangeMin > this.state.rangeMax
-      ) {
-        return 'Must be less than or equal to maximum value';
-      } else {
-        // Valid
-        return null;
-      }
-    };
-    this.rangeMaxValidator = () => {
-      if (this.state.rangeMax !== 0 && !this.state.rangeMax) {
-        // Required
-        return 'Maximum value required';
-      } else if (
-        // >= rangeMin
-        (this.state.rangeMin === 0 || this.state.rangeMin) &&
-        this.state.rangeMin > this.state.rangeMax
-      ) {
-        return 'Must be greater than or equal to minimum value';
-      } else {
-        // Valid
-        return null;
-      }
-    };
-    this.numChildrenValidator = () => {
-      if (!this.state.numChildren && this.state.numChildren !== 0) {
-        return 'Number of child nodes required';
-      } else {
-        return null;
-      }
-    };
+    this.nameValidator = () => FactoryValidators.nameValidator(this.state);
+    this.rangeMinValidator = () =>
+      FactoryValidators.rangeMinValidator(this.state);
+    this.rangeMaxValidator = () =>
+      FactoryValidators.rangeMaxValidator(this.state);
+    this.numChildrenValidator = () =>
+      FactoryValidators.numChildrenValidator(this.state);
 
     this.updateAttributesEnabled = () => {
       return !(
@@ -158,7 +127,7 @@ export class EditFactoryForm extends PureComponent {
             validator={this.numChildrenValidator}
             value={this.state.numChildren}
           />
-          <div class="form-group col">
+          <div className="form-group col">
             <button
               type="button"
               disabled={!this.updateAttributesEnabled()}
@@ -171,7 +140,7 @@ export class EditFactoryForm extends PureComponent {
 
           <hr />
 
-          <div class="form-group col">
+          <div className="form-group col">
             <button
               type="button"
               className="btn btn-secondary form-control"
@@ -192,3 +161,8 @@ export class EditFactoryForm extends PureComponent {
     );
   }
 }
+
+EditFactoryForm.propTypes = {
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
+  factoryState: PropTypes.object.isRequired
+};

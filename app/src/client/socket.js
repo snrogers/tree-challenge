@@ -1,3 +1,5 @@
+import { getTreeState } from '#shared/actions';
+
 let _dispatch = null;
 let _socket = null;
 let _store = null;
@@ -38,12 +40,12 @@ export function openSocketConnection() {
 
   // FIRE IT UP
   _socket = window.socket = new WebSocket(host);
-  _socket.onopen = () => {};
+  _socket.onopen = () => {
+    _socket.send(JSON.stringify(getTreeState()));
+  };
 
   // Handle Messages
   _socket.onmessage = message => {
-    console.log('=== MESSAGE ===');
-    console.log(message);
     _dispatch(JSON.parse(message.data));
   };
 

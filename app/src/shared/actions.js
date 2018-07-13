@@ -1,5 +1,6 @@
 // NOTE: Gotta use strings instead of Symbols since
 // most of these are gonna get sent to the server
+// and Symbols don't serialize with JSON.stringify
 export const ACTIVATE_NEW_FACTORY_MODAL = 'ACTIVATE_NEW_FACTORY_MODAL';
 export const ACTIVATE_EDIT_FACTORY_MODAL = 'ACTIVATE_EDIT_FACTORY_MODAL';
 export const ADD_FACTORY = 'ADD_FACTORY';
@@ -12,10 +13,6 @@ export const RENAME_FACTORY = 'RENAME_FACTORY';
 // NOTE: { _remote: true } means these will be
 // sent to the server rather than to the store
 export function addFactory(factory) {
-  if (factory.numChildren < 0 || factory.numChildren > 15)
-    throw new Error('numChildren out of bounds');
-  if (factory.rangeMin > factory.rangeMax)
-    throw new Error('rangeMin > rangeMax');
   return {
     _remote: true,
     type: ADD_FACTORY,
@@ -32,10 +29,6 @@ export function getTreeState(treeState) {
 }
 
 export function regenerateFactory(factory) {
-  if (factory.numChildren < 0 || factory.numChildren > 15)
-    throw new Error('numChildren out of bounds');
-  if (factory.rangeMin > factory.rangeMax)
-    throw new Error('rangeMin > rangeMax');
   return {
     _remote: true,
     type: REGENERATE_FACTORY,

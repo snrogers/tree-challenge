@@ -54,8 +54,7 @@ export class Tree extends PureComponent {
   }
 }
 
-// TODO: more specific
-Tree.proptypes = {
-  actions: PropTypes.string.isRequired,
+Tree.propTypes = {
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
   treeState: PropTypes.arrayOf(PropTypes.object).isRequired
 };

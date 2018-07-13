@@ -1,6 +1,5 @@
 // const CleanWebpackPlugin = require("clean-webpack-plugin");
 const path = require('path');
-// const TransformRuntime = require('@babel/plugin-transform-runtime');
 
 const pathAliases = {
   '#client': path.resolve(__dirname, 'app', 'src', 'client'),
@@ -20,10 +19,7 @@ const commonConfig = {
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: [
-              '@babel/plugin-transform-runtime'
-              // '@babel/plugin-proposal-class-properties'
-            ],
+            plugins: ['@babel/plugin-transform-runtime'],
             presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }

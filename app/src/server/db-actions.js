@@ -1,5 +1,6 @@
 import {
   ADD_FACTORY,
+  GET_TREE_STATE,
   REGENERATE_FACTORY,
   REMOVE_FACTORY,
   RENAME_FACTORY
@@ -28,14 +29,19 @@ export async function processAction(action) {
   switch (action.type) {
     case ADD_FACTORY:
       const factory = regenerated(action.factory);
-      console.log(factory);
-      await Factory.create(factory);
+      await Factory.create(factory, {
+        fields: ['name', 'rangeMin', 'rangeMax', 'numChildren', 'children']
+      });
+      break;
+    case GET_TREE_STATE:
       break;
     case REGENERATE_FACTORY:
       dbFactory = await Factory.find({
         where: { id: action.factory.id }
       });
-      await dbFactory.update(regenerated(action.factory));
+      await dbFactory.update(regenerated(action.factory), {
+        fields: ['rangeMin', 'rangeMax', 'numChildren', 'children']
+      });
       break;
     case REMOVE_FACTORY:
       await Factory.destroy({ where: { id: action.factory.id } });
@@ -44,7 +50,9 @@ export async function processAction(action) {
       dbFactory = await Factory.find({
         where: { id: action.factory.id }
       });
-      await dbFactory.update({ name: action.factory.name });
+      await dbFactory.update(action.factory, {
+        fields: ['name']
+      });
       break;
     default:
       console.error(`**** Unrecognized action.type: ${action.type}`);

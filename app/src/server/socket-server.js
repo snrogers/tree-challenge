@@ -20,21 +20,28 @@ export async function registerSocketClient(client) {
     clients.push(client);
 
     client.on('message', async message => {
+      let request;
       try {
-        message = JSON.parse(message);
+        request = JSON.parse(message);
         console.log('**** Request');
-        console.log(message);
-        await processAction(message);
+        console.log(request);
+        await processAction(request);
         const treeState = await getTreeState();
         const response = Actions.getTreeState(treeState);
         sendAll(JSON.stringify(response));
       } catch (e) {
         console.error(e);
+        if (e.message.indexOf('Unexpected token') === -1) {
+          console.error('vvvv REQUEST THAT BROKE THINGS vvvv');
+          console.error(request);
+          console.error('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        } else {
+          console.error('vvvv MESSAGE THAT BROKE THINGS vvvv');
+          console.error(message);
+          console.error('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        }
       }
     });
-
-    const treeState = await getTreeState();
-    client.send(JSON.stringify(Actions.getTreeState(treeState)));
   } catch (e) {
     console.error(e);
   }

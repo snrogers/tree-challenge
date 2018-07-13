@@ -1,11 +1,10 @@
-// TODO: Maybe go back to require()
-// Gotta use const because Sequlize does some kinda module loading
+// Sequelize does some module loading that breaks if we pre-import,
+// so gotta use require() here
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const configs = require('../../db/config/config');
 
-// TODO: Maybe go back to require()
 // Because I'm transpiling, __dirname points to build/server
 const basename = path.resolve(__dirname, '..', '..', 'db', 'models');
 const env = process.env.NODE_ENV || 'development';
