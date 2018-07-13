@@ -31,7 +31,7 @@ export function openSocketConnection() {
   let host = location.origin;
   host = host.slice(host.indexOf('://') + 3, host.length);
   if (host.indexOf(':') !== -1) {
-    // connect @ port 400 in development
+    // connect @ port 4000 in development
     host = host.slice(0, host.indexOf(':') + 1) + '4000';
   }
   host = 'ws://' + host;

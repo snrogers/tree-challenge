@@ -8,9 +8,7 @@ import { TextControl } from './text-control';
 export class EditFactoryForm extends PureComponent {
   constructor(props) {
     super(props);
-
     const { actions, factoryState } = props;
-
     this.state = { ...factoryState };
 
     this.handleUpdateAttributes = () => {
@@ -25,9 +23,11 @@ export class EditFactoryForm extends PureComponent {
     /*********************/
     this.handleUpdateAttributes = () => {
       actions.regenerateFactory(this.state);
+      actions.closeModal();
     };
     this.handleUpdateName = () => {
       actions.renameFactory(this.state);
+      actions.closeModal();
     };
     this.handleRemoveFactory = () => {
       actions.removeFactory(this.state);
@@ -123,7 +123,7 @@ export class EditFactoryForm extends PureComponent {
           <div className="form-group col">
             <button
               type="button"
-              disabled={!this.nameValidator}
+              disabled={this.nameValidator()}
               className="btn btn-primary form-control"
               onClick={this.handleUpdateName}
             >

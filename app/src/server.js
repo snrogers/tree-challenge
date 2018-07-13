@@ -29,7 +29,7 @@ global.__clientdir = path.join(__rootdir, '..', 'client');
 /** Express Server **/
 /********************/
 
-const port = process.env.PORT || 4000;
+const port = process.env === 'production' ? process.env.PORT : 4000;
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -37,7 +37,6 @@ const wss = new WebSocket.Server({ server });
 app.use('/public', express.static(__publicdir));
 app.use('/public', express.static(__clientdir));
 app.get('/', (req, res) => {
-  console.log(req);
   res.sendFile(path.join(__publicdir, 'index.html'));
 });
 

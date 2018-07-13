@@ -1,15 +1,13 @@
-// TODO: Go back to require()
+// TODO: Maybe go back to require()
 // Gotta use const because Sequlize does some kinda module loading
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const configs = require('../../db/config/config');
 
-// TODO: Go back to require()
+// TODO: Maybe go back to require()
 // Because I'm transpiling, __dirname points to build/server
-// A POOR DECISION INDEED
 const basename = path.resolve(__dirname, '..', '..', 'db', 'models');
-console.log('BASENAME:', basename);
 const env = process.env.NODE_ENV || 'development';
 const config = configs[env];
 const db = {};

@@ -32,7 +32,10 @@ export const rootReducer = function(state = defaultState, action) {
     case CLOSE_MODAL:
       return { ...state, modalState: { isOpen: false } };
     case GET_TREE_STATE:
-      return { ...state, treeState: action.treeState };
+      return {
+        ...state,
+        treeState: action.treeState
+      };
     default:
       return state;
   }
