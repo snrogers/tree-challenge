@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import * as FactoryValidators from './factory-validators';
+import * as FactoryValidators from '#shared/factory-validators';
 import { Factory } from './factory';
 import { IntegerControl } from './integer-control';
 import { TextControl } from './text-control';
@@ -141,13 +141,6 @@ export class EditFactoryForm extends PureComponent {
           <hr />
 
           <div className="form-group col">
-            <button
-              type="button"
-              className="btn btn-secondary form-control"
-              onClick={this.props.actions.closeModal}
-            >
-              Cancel
-            </button>
             <button
               type="button"
               className="btn btn-danger form-control"

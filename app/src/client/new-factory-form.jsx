@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import * as FactoryValidators from './factory-validators';
+import * as FactoryValidators from '#shared/factory-validators';
 import { Factory } from './factory';
 import { IntegerControl } from './integer-control';
 import { TextControl } from './text-control';

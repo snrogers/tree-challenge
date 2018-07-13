@@ -1,3 +1,5 @@
+import * as FactoryValidators from '#shared/factory-validators';
+
 import {
   ADD_FACTORY,
   GET_TREE_STATE,
@@ -28,6 +30,13 @@ export async function processAction(action) {
   let dbFactory;
   switch (action.type) {
     case ADD_FACTORY:
+      if (
+        FactoryValidators.rangeMinValidator(action.factory) ||
+        FactoryValidators.rangeMaxValidator(action.factory) ||
+        FactoryValidators.numChildrenValidator(action.factory)
+      ) {
+        return;
+      }
       const factory = regenerated(action.factory);
       await Factory.create(factory, {
         fields: ['name', 'rangeMin', 'rangeMax', 'numChildren', 'children']
@@ -36,6 +45,13 @@ export async function processAction(action) {
     case GET_TREE_STATE:
       break;
     case REGENERATE_FACTORY:
+      if (
+        FactoryValidators.rangeMinValidator(action.factory) ||
+        FactoryValidators.rangeMaxValidator(action.factory) ||
+        FactoryValidators.numChildrenValidator(action.factory)
+      ) {
+        return;
+      }
       dbFactory = await Factory.find({
         where: { id: action.factory.id }
       });
